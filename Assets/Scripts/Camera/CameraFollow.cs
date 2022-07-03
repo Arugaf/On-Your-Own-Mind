@@ -5,6 +5,8 @@ namespace Camera {
         [SerializeField] private Transform target;
         [SerializeField] private Transform leftBoundary;
         [SerializeField] private Transform rightBoundary;
+        [SerializeField] private Transform upperBoundary;
+        [SerializeField] private Transform lowerBoundary;
 
         [SerializeField] private float smoothSpeed = 0.125f;
 
@@ -24,11 +26,18 @@ namespace Camera {
 
             var smoothedPosition = Vector3.Lerp(position, desiredPosition, smoothSpeed);
             transform.position = new Vector3(
-                Mathf.Clamp(smoothedPosition.x,
+                Mathf.Clamp(
+                    smoothedPosition.x,
                     leftBoundary.position.x + 8.91f,
-                    rightBoundary.position.x - 8.91f),
-                smoothedPosition.y,
-                position.z);
+                    rightBoundary.position.x - 8.91f
+                ),
+                Mathf.Clamp(
+                    smoothedPosition.y,
+                    lowerBoundary.position.y + 8.91f,
+                    upperBoundary.position.y - 8.91f
+                ),
+                position.z
+            );
         }
     }
 }
