@@ -17,9 +17,27 @@ namespace Player {
         private Vector2 _velocity = Vector2.zero;
         [Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f;
 
+        private Sprite _front;
+        private Sprite _back;
+        private Sprite _left;
+        private Sprite _right;
+
+        private AudioSource _movementSound;
+
+        // private SpriteRenderer _renderer;
+
         public void Start() {
             _playerRigidbody = GetComponent<Rigidbody2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+
+            _front = Resources.Load<Sprite>("Player/PlayerFront");
+            _back = Resources.Load<Sprite>("Player/PlayerBack");
+            _left = Resources.Load<Sprite>("Player/PlayerLeft");
+            _right = Resources.Load<Sprite>("Player/PlayerRight");
+
+            _movementSound = GetComponent<AudioSource>();
+
+            // _renderer = GetComponent<SpriteRenderer>();
         }
 
         public void Update() {
@@ -27,12 +45,31 @@ namespace Player {
             _horizontalMove = Input.GetAxisRaw("Horizontal");
 
             {
+                if (Mathf.Abs(_verticalMove) <= 0.1f && Mathf.Abs(_horizontalMove) <= 0.1f) {
+                    _movementSound.Stop();
+                }
+                else {
+                    if (!_movementSound.isPlaying) {
+                        _movementSound.Play();
+                    }
+                }
+                
+                if (_verticalMove > 0) {
+                    _spriteRenderer.sprite = _back;
+                }
+
+                if (_verticalMove < 0) {
+                    _spriteRenderer.sprite = _front;
+                }
+                
                 if (_horizontalMove > 0) {
-                    _spriteRenderer.flipX = false;
+                    _spriteRenderer.sprite = _right;
+                    // _spriteRenderer.flipX = false;
                 }
 
                 if (_horizontalMove < 0) {
-                    _spriteRenderer.flipX = true;
+                    _spriteRenderer.sprite = _left;
+                    // _spriteRenderer.flipX = true;
                 }
             }
         }

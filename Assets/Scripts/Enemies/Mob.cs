@@ -28,6 +28,8 @@ namespace Enemies {
 
         private const float KVelocityMultiplier = 50f;
 
+        [SerializeField] private AudioSource sound;
+
         // private Transform _transform;
 
         public void SetType(EnemyType typeTo) {
@@ -59,6 +61,8 @@ namespace Enemies {
                 if (!_sanity) {
                     return;
                 }
+                
+                sound.Play();
 
                 switch (type) {
                     case EnemyType.Ally: {
@@ -70,7 +74,7 @@ namespace Enemies {
                         break;
                     }
                 }
-
+                
                 Destroy(gameObject);
             }
         }

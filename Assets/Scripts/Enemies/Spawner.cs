@@ -3,7 +3,9 @@ using Random = UnityEngine.Random;
 
 namespace Enemies {
     public class Spawner : MonoBehaviour {
-        [SerializeField] private GameObject toSpawn;
+        [SerializeField] private GameObject toSpawnAlly;
+        [SerializeField] private GameObject toSpawnFoe;
+
 
         [SerializeField] private Transform target;
         [SerializeField] private UnityEngine.Light lightSource;
@@ -15,7 +17,7 @@ namespace Enemies {
         private int _mobCounter;
 
         private Vector3 GeneratePosition() {
-            var lightRange = lightSource.range + 2;
+            var lightRange = lightSource.range + 1.5f;
 
             var targetPosition = target.position;
 
@@ -27,8 +29,8 @@ namespace Enemies {
             var cos = Mathf.Cos(angle);
             var sin = Mathf.Sin(angle);
 
-            var x = Random.Range(xTarget, xTarget + cos * (maxSpawnDistance + 2 - lightRange)) + cos * lightRange;
-            var y = Random.Range(yTarget, yTarget + sin * (maxSpawnDistance + 2 - lightRange)) + sin * lightRange;
+            var x = Random.Range(xTarget, xTarget + cos * (maxSpawnDistance + 1.5f - lightRange)) + cos * lightRange;
+            var y = Random.Range(yTarget, yTarget + sin * (maxSpawnDistance + 1.5f - lightRange)) + sin * lightRange;
 
             return new Vector3(
                 x, // wqaaaaaaaaaaa                 ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccxccccccccccccccccccccccccccccccccccccccccdfx, // clamp edge of map
@@ -42,9 +44,8 @@ namespace Enemies {
                 return;
             }
 
-            Instantiate(toSpawn, GeneratePosition(), Quaternion.identity)
-                .GetComponent<Mob>()
-                .SetType(Random.value > 0.5 ? Mob.EnemyType.Foe : Mob.EnemyType.Ally);
+            Instantiate(Random.value > 0.5 ? toSpawnAlly : toSpawnFoe, GeneratePosition(), Quaternion.identity).GetComponent<Mob>();
+                // .SetType(Random.value > 0.5 ? Mob.EnemyType.Foe : Mob.EnemyType.Ally);
             // go;
             ++_mobCounter;
         }

@@ -575,7 +575,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: But in the end we are on our own anyways
+  m_text: 'But in the end we are on our own anyway
+
+
+
+    Try again'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d47cd7ad2a160804fbbb2d90de3db822, type: 2}
   m_sharedMaterial: {fileID: -8046108185755552035, guid: d47cd7ad2a160804fbbb2d90de3db822, type: 2}
