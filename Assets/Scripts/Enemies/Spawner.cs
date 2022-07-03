@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,20 +6,19 @@ namespace Enemies {
         [SerializeField] private GameObject toSpawn;
 
         [SerializeField] private Transform target;
-        [SerializeField] private Light lightSource;
+        [SerializeField] private UnityEngine.Light lightSource;
 
         [SerializeField] private float maxSpawnDistance;
         [SerializeField] private float spawnTimeDelay;
 
         [SerializeField] [Range(1, 100)] private int maxMobs;
+        private int _mobCounter;
 
-        // private GameObject[] mobs;
-
-        public Vector3 GeneratePosition() {
-            var lightRange = lightSource.range;
+        private Vector3 GeneratePosition() {
+            var lightRange = lightSource.range + 2;
 
             var targetPosition = target.position;
-            
+
             var xTarget = targetPosition.x;
             var yTarget = targetPosition.y;
 
@@ -30,9 +26,9 @@ namespace Enemies {
             var angle = Random.Range(0f, 359f) * Mathf.PI / 180;
             var cos = Mathf.Cos(angle);
             var sin = Mathf.Sin(angle);
-            
-            var x = Random.Range(xTarget, xTarget + cos * (maxSpawnDistance - lightRange)) + cos * lightRange;
-            var y = Random.Range(yTarget, yTarget + sin * (maxSpawnDistance - lightRange)) + sin * lightRange;
+
+            var x = Random.Range(xTarget, xTarget + cos * (maxSpawnDistance + 2 - lightRange)) + cos * lightRange;
+            var y = Random.Range(yTarget, yTarget + sin * (maxSpawnDistance + 2 - lightRange)) + sin * lightRange;
 
             return new Vector3(
                 x, // wqaaaaaaaaaaa                 ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccxccccccccccccccccccccccccccccccccccccccccdfx, // clamp edge of map
@@ -42,15 +38,23 @@ namespace Enemies {
         }
 
         public void Spawn() {
-            Instantiate(toSpawn, GeneratePosition(), Quaternion.identity);
+            if (_mobCounter >= maxMobs) {
+                return;
+            }
+
+            Instantiate(toSpawn, GeneratePosition(), Quaternion.identity)
+                .GetComponent<Mob>()
+                .SetType(Random.value > 0.5 ? Mob.EnemyType.Foe : Mob.EnemyType.Ally);
+            // go;
+            ++_mobCounter;
         }
 
-        // Start is called before the first frame update
+        public void DeleteMob() {
+            --_mobCounter;
+        }
+
         void Start() {
-            InvokeRepeating("Spawn", 0, spawnTimeDelay);
+            InvokeRepeating(nameof(Spawn), 0, spawnTimeDelay);
         }
-
-        // Update is called once per frame
-        void Update() { }
     }
 }
