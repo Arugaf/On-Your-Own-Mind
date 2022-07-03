@@ -692,7 +692,7 @@ RectTransform:
   m_GameObject: {fileID: 835304078}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 2023656964}
   - {fileID: 869415178}
@@ -1030,8 +1030,8 @@ MonoBehaviour:
   target: {fileID: 993427849}
   lightSource: {fileID: 858414288}
   maxSpawnDistance: 5
-  spawnTimeDelay: 2
-  maxMobs: 20
+  spawnTimeDelay: 1
+  maxMobs: 30
 --- !u!1 &993427846
 GameObject:
   m_ObjectHideFlags: 0
@@ -1064,8 +1064,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76a4d9d4060b6c439d5185ad8d13e36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  verticalVelocityMultiplier: 0.1
-  horizontalVelocityMultiplier: 0.1
+  verticalVelocityMultiplier: 0.15
+  horizontalVelocityMultiplier: 0.15
   movementSmoothing: 0.05
 --- !u!212 &993427848
 SpriteRenderer:
@@ -2333,7 +2333,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 106, y: -2}
+  m_AnchoredPosition: {x: 106.000015, y: -2}
   m_SizeDelta: {x: 210, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2023656965
@@ -2422,7 +2422,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sanity: 0
   maxSanity: 500
-  defaultSanity: 400
+  defaultSanity: 500
   fractionOfSecond: 0.02
   amountPerFractionOfSecond: 1
   brain: {fileID: 869415179}
