@@ -21,6 +21,9 @@ namespace Player {
 
         private Mutex _sanityMutex = new Mutex();
 
+        [SerializeField] private Light.LightController lightTop;
+        [SerializeField] private Light.LightController lightBottom;
+
         public void ReduceConsistently() {
             _sanityMutex.WaitOne();
             sanity = Mathf.Clamp(sanity - amountPerFractionOfSecond, 0f, maxSanity);
@@ -56,6 +59,14 @@ namespace Player {
             var g = Mathf.Lerp(startColor.g, endColor.g, _slider.value);
             var b = Mathf.Lerp(startColor.b, endColor.b, _slider.value);
             brain.color = new Color(r, g, b);
+
+            if (sanity <= 0) {
+                lightTop.intensityAddableAmount = -lightTop.intensityAddableAmount;
+                lightBottom.intensityAddableAmount = -lightBottom.intensityAddableAmount;
+                lightTop.active = false;
+                lightBottom.active = false;
+                gameObject.SetActive(false);
+            }
         }
     }
 }
